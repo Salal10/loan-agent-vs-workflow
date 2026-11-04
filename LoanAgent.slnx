@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/banking-api.Tests/">
+    <Project Path="banking-api.Tests/LoanApi.Tests.csproj" />
+  </Folder>
+  <Folder Name="/banking-api/">
+    <Project Path="banking-api/LoanApi.csproj" />
+  </Folder>
+</Solution>
