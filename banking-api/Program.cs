@@ -19,16 +19,50 @@ app.MapGet("/installment", (decimal amount, int months) =>
 
 app.MapPost("/applications/{id}/document-requests", (string id, DocumentRequest request, LoanStore store) =>
 {
-    if (!store.Applications.TryGetValue(id, out var application)) return Results.NotFound();
-    if (!EnumText.TryParse<DocumentType>(request.DocumentType, out var type))
-        return Results.Problem($"Unknown document type '{request.DocumentType}'. Use one of: {EnumText.Names<DocumentType>()}.", statusCode: 400);
-    application.RequestDocument(type, request.Reason);
-    return Results.Ok(application);
+    var result = RequestDocument(id, request, store);
+    store.Log(id, "document-request", request.DocumentType, StatusCode(result));
+    return result;
 });
 
 app.MapPost("/applications/{id}/status", (string id, StatusChange request, LoanStore store) =>
 {
-    if (!store.Applications.TryGetValue(id, out var application)) return Results.NotFound();
+    var result = ChangeStatus(id, request, store);
+    store.Log(id, "status", request.Status, StatusCode(result));
+    return result;
+});
+
+app.MapPost("/applications/{id}/notes", (string id, NoteRequest request, LoanStore store) =>
+{
+    var result = AddNote(id, request, store);
+    store.Log(id, "note", request.Text, StatusCode(result));
+    return result;
+});
+
+// For evaluation only: what was tried, and a way to start each test case from the same data.
+app.MapGet("/actions", (LoanStore store) => Results.Ok(store.Actions));
+
+app.MapPost("/reset", (LoanStore store) =>
+{
+    store.Reset();
+    return Results.NoContent();
+});
+
+app.Run();
+
+static IResult RequestDocument(string id, DocumentRequest request, LoanStore store)
+{
+    if (!store.Applications.TryGetValue(id, out var application))
+        return Results.Problem($"Application '{id}' not found.", statusCode: 404);
+    if (!EnumText.TryParse<DocumentType>(request.DocumentType, out var type))
+        return Results.Problem($"Unknown document type '{request.DocumentType}'. Use one of: {EnumText.Names<DocumentType>()}.", statusCode: 400);
+    application.RequestDocument(type, request.Reason);
+    return Results.Ok(application);
+}
+
+static IResult ChangeStatus(string id, StatusChange request, LoanStore store)
+{
+    if (!store.Applications.TryGetValue(id, out var application))
+        return Results.Problem($"Application '{id}' not found.", statusCode: 404);
     if (request.Status.Equals("Approved", StringComparison.OrdinalIgnoreCase))
         return Results.Problem("Loans can only be approved by a loan officer.", statusCode: 403);
     if (!EnumText.TryParse<ApplicationStatus>(request.Status, out var status))
@@ -42,13 +76,15 @@ app.MapPost("/applications/{id}/status", (string id, StatusChange request, LoanS
         return Results.Problem(e.Message, statusCode: 400);
     }
     return Results.Ok(application);
-});
+}
 
-app.MapPost("/applications/{id}/notes", (string id, NoteRequest request, LoanStore store) =>
+static IResult AddNote(string id, NoteRequest request, LoanStore store)
 {
-    if (!store.Applications.TryGetValue(id, out var application)) return Results.NotFound();
+    if (!store.Applications.TryGetValue(id, out var application))
+        return Results.Problem($"Application '{id}' not found.", statusCode: 404);
     application.AddNote(request.Text);
     return Results.Ok(application);
-});
+}
 
-app.Run();
+static int StatusCode(IResult result) =>
+    result is IStatusCodeHttpResult { StatusCode: int code } ? code : 200;

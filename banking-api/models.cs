@@ -48,6 +48,7 @@ public class LoanApplication
 public record DocumentRequest(string DocumentType, string Reason);
 public record StatusChange(string Status, string Reason);
 public record NoteRequest(string Text);
+public record ActionRecord(string ApplicationId, string Action, string Value, int StatusCode);
 
 public static class EnumText
 {

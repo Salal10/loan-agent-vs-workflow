@@ -4,9 +4,30 @@ public class LoanStore
 {
     public Dictionary<string, Customer> Customers { get; } = [];
     public Dictionary<string, LoanApplication> Applications { get; } = [];
+    public List<ActionRecord> Actions { get; } = [];
+
+    private readonly DateOnly _today;
 
     public LoanStore(DateOnly today)
     {
+        _today = today;
+        Seed();
+    }
+
+    public void Reset()
+    {
+        Customers.Clear();
+        Applications.Clear();
+        Actions.Clear();
+        Seed();
+    }
+
+    public void Log(string applicationId, string action, string value, int statusCode) =>
+        Actions.Add(new ActionRecord(applicationId, action, value, statusCode));
+
+    private void Seed()
+    {
+        var today = _today;
         DateOnly Years(int n) => today.AddYears(n);
         DateOnly Months(int n) => today.AddMonths(n);
 
