@@ -9,12 +9,14 @@ from google import genai
 
 from loan_assistant.api_client import BankingApi
 from loan_assistant.workflow import run_workflow
+from loan_assistant.agent import run_agent
 
 CASES_PATH = Path("../eval/cases.json")
 RESULTS_DIR = Path("../eval/results")
 
 SYSTEMS = {
     "workflow": run_workflow,
+    "agent": run_agent,
 }
 
 
