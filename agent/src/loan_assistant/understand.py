@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from google import genai
 from google.genai import errors, types
 from pydantic import BaseModel
+from loan_assistant.usage import USAGE
 
 MODEL = "gemini-3.5-flash-lite"
 
@@ -47,7 +48,8 @@ def understand(client: genai.Client, request: str, attempts: int = 3, wait: int 
                     response_schema=UnderstoodRequest,
                 ),
             )
-            return response.parsed
+            USAGE.add(response)
+            return response.parsed        
         except errors.APIError as error:
             if attempt == attempts:
                 raise RuntimeError(f"Gemini failed {attempts} times") from error

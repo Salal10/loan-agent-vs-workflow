@@ -10,6 +10,7 @@ from google import genai
 from google.genai import errors, types
 
 from loan_assistant.api_client import BankingApi
+from loan_assistant.usage import USAGE
 
 MODEL = "gemini-3.5-flash-lite"
 MAX_STEPS = 10
@@ -122,7 +123,9 @@ def generate(client: genai.Client, contents: list, config: types.GenerateContent
              attempts: int = 5, wait: int = 10) -> types.GenerateContentResponse:
     for attempt in range(1, attempts + 1):
         try:
-            return client.models.generate_content(model=MODEL, contents=contents, config=config)
+            response = client.models.generate_content(model=MODEL, contents=contents, config=config)
+            USAGE.add(response)
+            return response
         except errors.APIError as error:
             if attempt == attempts:
                 raise RuntimeError(f"Gemini failed {attempts} times") from error
