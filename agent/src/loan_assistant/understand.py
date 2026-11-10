@@ -37,7 +37,7 @@ Return:
 </request>"""
 
 
-def understand(client: genai.Client, request: str, attempts: int = 3, wait: int = 5) -> UnderstoodRequest:
+def understand(client: genai.Client, request: str, attempts: int = 5, wait: int = 10) -> UnderstoodRequest:
     for attempt in range(1, attempts + 1):
         try:
             response = client.models.generate_content(
@@ -55,6 +55,7 @@ def understand(client: genai.Client, request: str, attempts: int = 3, wait: int 
                 raise RuntimeError(f"Gemini failed {attempts} times") from error
             print(f"Gemini error {error.code}, retrying in {wait}s...")
             time.sleep(wait)
+            wait *= 2
 
 
 if __name__ == "__main__":

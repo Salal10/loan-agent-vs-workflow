@@ -28,6 +28,13 @@ class BankingApi:
         response.raise_for_status()
         return response.json()["monthlyInstallment"]
 
+    def affordability(self, application_id: str) -> dict | None:
+        response = self.http.get(f"/applications/{application_id}/affordability")
+        if response.status_code == 404:
+            return None
+        response.raise_for_status()
+        return response.json()
+
     # ---- actions (these can fail on purpose, e.g. 403 for "Approved", so we return the response) ----
 
     def request_document(self, application_id: str, document_type: str, reason: str) -> httpx.Response:

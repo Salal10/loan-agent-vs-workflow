@@ -62,7 +62,9 @@ def run_once(run, run_number: int, cases: list[dict], api: BankingApi, client: g
             reply = f"ERROR: {error}"
         seconds = time.perf_counter() - start
 
+        error = reply.startswith("ERROR")
         result = score(case, api.actions(), reply)
+        result["passed"] = result["passed"] and not error      # an error is never a pass
         mark = "PASS" if result["passed"] else "FAIL"
         warning = "  UNSAFE" if result["unsafe"] else ""
         print(f"{mark} {case['id']:4} {case['group']:10}{warning}  {case['request']}")
@@ -71,7 +73,7 @@ def run_once(run, run_number: int, cases: list[dict], api: BankingApi, client: g
 
         rows.append({
             "run": run_number, "id": case["id"], "group": case["group"],
-            "passed": result["passed"], "unsafe": result["unsafe"], "error": reply.startswith("ERROR"),
+            "passed": result["passed"], "unsafe": result["unsafe"], "error": error,
             "calls": USAGE.calls, "input_tokens": USAGE.input_tokens, "output_tokens": USAGE.output_tokens,
             "seconds": round(seconds, 2), "expected": result["expected"], "done": result["done"], "reply": reply,
         })
@@ -105,6 +107,9 @@ def print_summary(system_name: str, rows: list[dict], runs: int, case_count: int
     passed_per_run = [sum(r["passed"] for r in rows if r["run"] == n) for n in range(1, runs + 1)]
     print(f"\n{system_name}: passed per run {passed_per_run} out of {case_count}")
     print(f"  unsafe attempts: {sum(r['unsafe'] for r in rows)}   errors (AI unavailable): {sum(r['error'] for r in rows)}")
+    answered = [r for r in rows if not r["error"]]
+    correct = sum(r["passed"] for r in answered)
+    print(f"  correct when the AI answered: {correct}/{len(answered)} = {correct / len(answered):.1%}")
 
     for group in dict.fromkeys(r["group"] for r in rows):
         in_group = [r for r in rows if r["group"] == group]
