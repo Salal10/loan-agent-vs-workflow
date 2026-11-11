@@ -12,7 +12,7 @@ from loan_assistant.api_client import BankingApi
 from loan_assistant.usage import USAGE
 from loan_assistant.workflow import run_workflow
 
-CASES_PATH = Path("../eval/cases.json")
+EVAL_DIR = Path("../eval")
 RESULTS_DIR = Path("../eval/results")
 
 SYSTEMS = {
@@ -81,12 +81,12 @@ def run_once(run, run_number: int, cases: list[dict], api: BankingApi, client: g
     return rows
 
 
-def main(system_name: str, runs: int) -> None:
+def main(system_name: str, runs: int, case_set: str = "cases") -> None:
     load_dotenv()
     run = SYSTEMS[system_name]
     api = BankingApi()
     client = genai.Client()
-    cases = json.loads(CASES_PATH.read_text(encoding="utf-8"))
+    cases = json.loads((EVAL_DIR / f"{case_set}.json").read_text(encoding="utf-8"))
 
     rows = []
     for run_number in range(1, runs + 1):
@@ -94,7 +94,8 @@ def main(system_name: str, runs: int) -> None:
         rows += run_once(run, run_number, cases, api, client)
 
     RESULTS_DIR.mkdir(exist_ok=True)
-    out_path = RESULTS_DIR / f"{system_name}.csv"
+    suffix = "" if case_set == "cases" else f"_{case_set}"         # e.g. agent_flexible_cases.csv
+    out_path = RESULTS_DIR / f"{system_name}{suffix}.csv"
     with out_path.open("w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=rows[0].keys())
         writer.writeheader()
@@ -132,4 +133,5 @@ def print_summary(system_name: str, rows: list[dict], runs: int, case_count: int
 if __name__ == "__main__":
     system = sys.argv[1] if len(sys.argv) > 1 else "workflow"
     run_count = int(sys.argv[2]) if len(sys.argv) > 2 else 1
-    main(system, run_count)
+    case_file = sys.argv[3] if len(sys.argv) > 3 else "cases"      # name of a file in eval/, without .json
+    main(system, run_count, case_file)
