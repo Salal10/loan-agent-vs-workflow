@@ -1,3 +1,4 @@
+import os
 import time
 from enum import Enum
 
@@ -7,7 +8,8 @@ from google.genai import errors, types
 from pydantic import BaseModel
 from loan_assistant.usage import USAGE
 
-MODEL = "gemini-3.5-flash-lite"
+load_dotenv()                                                   # read .env before the settings below
+MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")   # set GEMINI_MODEL in .env to switch
 
 
 class Intent(str, Enum):

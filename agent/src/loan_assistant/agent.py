@@ -1,3 +1,4 @@
+import os
 import json
 import sys
 import time
@@ -12,7 +13,8 @@ from google.genai import errors, types
 from loan_assistant.api_client import BankingApi
 from loan_assistant.usage import USAGE
 
-MODEL = "gemini-3.5-flash-lite"
+load_dotenv()                                                   # read .env before the settings below
+MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")   # set GEMINI_MODEL in .env to switch
 MAX_STEPS = 10
 POLICY = Path("../policy.md").read_text(encoding="utf-8")
 
