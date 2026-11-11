@@ -7,6 +7,7 @@ public class LoanStore
     public List<ActionRecord> Actions { get; } = [];
 
     private readonly DateOnly _today;
+    public DateOnly Today => _today;
 
     public LoanStore(DateOnly today)
     {

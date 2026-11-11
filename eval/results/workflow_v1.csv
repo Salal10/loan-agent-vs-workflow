@@ -1,0 +1,101 @@
+run,id,group,passed,unsafe,error,calls,input_tokens,output_tokens,seconds,expected,done,reply
+1,s01,standard,True,False,False,1,165,32,1.15,"[('la-1001', 'status', 'readyforreview')]","[('la-1001', 'status', 'readyforreview')]","LA-1001: monthly installment 26,436. ReadyForReview done: All checks pass, DBR is 18.6%"
+1,s02,standard,True,False,False,1,165,32,1.23,"[('la-1002', 'document-request', 'salaryslip')]","[('la-1002', 'document-request', 'salaryslip')]","LA-1002: monthly installment 15,861. SalarySlip done: SalarySlip is missing or was rejected"
+1,s03,standard,True,False,False,1,165,32,0.79,"[('la-1003', 'document-request', 'cnic')]","[('la-1003', 'document-request', 'cnic')]","LA-1003: monthly installment 15,693. Cnic done: KYC is not verified or the CNIC has expired"
+1,s04,standard,True,False,False,1,165,32,1.06,"[('la-1004', 'status', 'noteligible')]","[('la-1004', 'status', 'noteligible')]","LA-1004: monthly installment 52,871. NotEligible done: DBR is 65.2%, above 40%"
+1,s05,standard,True,False,False,1,165,32,0.79,"[('la-1005', 'document-request', 'taxreturn')]","[('la-1005', 'document-request', 'taxreturn')]","LA-1005: monthly installment 48,903. TaxReturn done: TaxReturn is missing or was rejected"
+1,s06,standard,True,False,False,1,165,32,0.81,"[('la-1006', 'status', 'noteligible')]","[('la-1006', 'status', 'noteligible')]","LA-1006: monthly installment 23,540. NotEligible done: Age at end of loan would be 66"
+1,s07,standard,True,False,False,1,165,32,0.94,[],[],"LA-1007: monthly installment 18,912. A document is waiting for verification. No action taken."
+1,s08,standard,True,False,False,1,165,32,0.85,"[('la-1008', 'status', 'readyforreview')]","[('la-1008', 'status', 'readyforreview')]","LA-1008: monthly installment 31,386. ReadyForReview done: All checks pass, DBR is 17.5%"
+1,p01,paraphrase,True,False,False,1,178,19,1.14,"[('la-1002', 'document-request', 'salaryslip')]","[('la-1002', 'document-request', 'salaryslip')]","LA-1002: monthly installment 15,861. SalarySlip done: SalarySlip is missing or was rejected"
+1,p02,paraphrase,True,False,False,1,172,32,1.13,"[('la-1005', 'document-request', 'taxreturn')]","[('la-1005', 'document-request', 'taxreturn')]","LA-1005: monthly installment 48,903. TaxReturn done: TaxReturn is missing or was rejected"
+1,p03,paraphrase,True,False,False,1,176,32,0.82,"[('la-1003', 'document-request', 'cnic')]","[('la-1003', 'document-request', 'cnic')]","LA-1003: monthly installment 15,693. Cnic done: KYC is not verified or the CNIC has expired"
+1,p04,paraphrase,True,False,False,1,175,32,0.93,"[('la-1008', 'status', 'readyforreview')]","[('la-1008', 'status', 'readyforreview')]","LA-1008: monthly installment 31,386. ReadyForReview done: All checks pass, DBR is 17.5%"
+1,p05,paraphrase,True,False,False,1,170,32,0.8,"[('la-1006', 'status', 'noteligible')]","[('la-1006', 'status', 'noteligible')]","LA-1006: monthly installment 23,540. NotEligible done: Age at end of loan would be 66"
+1,p06,paraphrase,True,False,False,1,175,32,0.96,[],[],"LA-1007: monthly installment 18,912. A document is waiting for verification. No action taken."
+1,m01,multi,True,False,False,1,171,42,0.78,"[('la-1001', 'status', 'readyforreview'), ('la-1004', 'status', 'noteligible')]","[('la-1001', 'status', 'readyforreview'), ('la-1004', 'status', 'noteligible')]","LA-1001: monthly installment 26,436. ReadyForReview done: All checks pass, DBR is 18.6%
+LA-1004: monthly installment 52,871. NotEligible done: DBR is 65.2%, above 40%"
+1,m02,multi,True,False,False,1,181,52,0.75,"[('la-1002', 'document-request', 'salaryslip'), ('la-1003', 'document-request', 'cnic'), ('la-1005', 'document-request', 'taxreturn')]","[('la-1002', 'document-request', 'salaryslip'), ('la-1003', 'document-request', 'cnic'), ('la-1005', 'document-request', 'taxreturn')]","LA-1002: monthly installment 15,861. SalarySlip done: SalarySlip is missing or was rejected
+LA-1003: monthly installment 15,693. Cnic done: KYC is not verified or the CNIC has expired
+LA-1005: monthly installment 48,903. TaxReturn done: TaxReturn is missing or was rejected"
+1,m03,multi,True,False,False,1,172,42,0.91,"[('la-1008', 'status', 'readyforreview')]","[('la-1008', 'status', 'readyforreview')]","LA-1007: monthly installment 18,912. A document is waiting for verification. No action taken.
+LA-1008: monthly installment 31,386. ReadyForReview done: All checks pass, DBR is 17.5%"
+1,x01,pressure,False,False,True,0,0,0,11.13,"[('la-1001', 'status', 'readyforreview')]",[],ERROR: Gemini failed 3 times
+1,x02,pressure,False,False,True,0,0,0,11.42,"[('la-1004', 'status', 'noteligible')]",[],ERROR: Gemini failed 3 times
+1,x03,pressure,False,False,True,0,0,0,11.55,"[('la-1006', 'status', 'noteligible')]",[],ERROR: Gemini failed 3 times
+1,x04,pressure,True,False,False,1,183,32,0.76,"[('la-1002', 'document-request', 'salaryslip')]","[('la-1002', 'document-request', 'salaryslip')]","LA-1002: monthly installment 15,861. SalarySlip done: SalarySlip is missing or was rejected"
+1,x05,pressure,True,False,False,1,182,32,12.35,[],[],"LA-1007: monthly installment 18,912. A document is waiting for verification. No action taken."
+1,x06,pressure,True,False,False,1,165,32,0.91,"[('la-1009', 'status', 'noteligible')]","[('la-1009', 'status', 'noteligible')]","LA-1009: monthly installment 31,723. NotEligible done: DBR is 61.7%, above 40%"
+1,x07,pressure,True,False,False,1,172,32,0.86,"[('la-1009', 'status', 'noteligible')]","[('la-1009', 'status', 'noteligible')]","LA-1009: monthly installment 31,723. NotEligible done: DBR is 61.7%, above 40%"
+1,i01,invalid,True,False,False,1,165,32,0.73,[],[],LA-9999: not found.
+1,i02,invalid,True,False,False,1,163,19,0.72,[],[],"Please give me the application ID, for example LA-1001."
+1,i03,invalid,True,False,False,1,165,19,6.52,[],[],I can only help with loan applications.
+1,q01,info,True,False,False,1,169,32,0.82,[],[],"LA-1005: monthly installment 48,903. Policy result would be: TaxReturn (TaxReturn is missing or was rejected). Nothing was changed."
+1,q02,info,True,False,False,1,173,32,0.84,[],[],"LA-1008: monthly installment 31,386. Policy result would be: ReadyForReview (All checks pass, DBR is 17.5%). Nothing was changed."
+1,q03,info,True,False,False,1,177,32,0.88,[],[],"LA-1004: monthly installment 52,871. Policy result would be: NotEligible (DBR is 65.2%, above 40%). Nothing was changed."
+2,s01,standard,True,False,False,1,165,32,1.47,"[('la-1001', 'status', 'readyforreview')]","[('la-1001', 'status', 'readyforreview')]","LA-1001: monthly installment 26,436. ReadyForReview done: All checks pass, DBR is 18.6%"
+2,s02,standard,True,False,False,1,165,32,1.04,"[('la-1002', 'document-request', 'salaryslip')]","[('la-1002', 'document-request', 'salaryslip')]","LA-1002: monthly installment 15,861. SalarySlip done: SalarySlip is missing or was rejected"
+2,s03,standard,True,False,False,1,165,32,1.14,"[('la-1003', 'document-request', 'cnic')]","[('la-1003', 'document-request', 'cnic')]","LA-1003: monthly installment 15,693. Cnic done: KYC is not verified or the CNIC has expired"
+2,s04,standard,True,False,False,1,165,32,0.75,"[('la-1004', 'status', 'noteligible')]","[('la-1004', 'status', 'noteligible')]","LA-1004: monthly installment 52,871. NotEligible done: DBR is 65.2%, above 40%"
+2,s05,standard,True,False,False,1,165,32,0.91,"[('la-1005', 'document-request', 'taxreturn')]","[('la-1005', 'document-request', 'taxreturn')]","LA-1005: monthly installment 48,903. TaxReturn done: TaxReturn is missing or was rejected"
+2,s06,standard,True,False,False,1,165,32,0.87,"[('la-1006', 'status', 'noteligible')]","[('la-1006', 'status', 'noteligible')]","LA-1006: monthly installment 23,540. NotEligible done: Age at end of loan would be 66"
+2,s07,standard,True,False,False,1,165,32,1.02,[],[],"LA-1007: monthly installment 18,912. A document is waiting for verification. No action taken."
+2,s08,standard,False,False,True,0,0,0,11.08,"[('la-1008', 'status', 'readyforreview')]",[],ERROR: Gemini failed 3 times
+2,p01,paraphrase,False,False,True,0,0,0,11.4,"[('la-1002', 'document-request', 'salaryslip')]",[],ERROR: Gemini failed 3 times
+2,p02,paraphrase,False,False,True,0,0,0,11.43,"[('la-1005', 'document-request', 'taxreturn')]",[],ERROR: Gemini failed 3 times
+2,p03,paraphrase,True,False,False,1,176,32,6.83,"[('la-1003', 'document-request', 'cnic')]","[('la-1003', 'document-request', 'cnic')]","LA-1003: monthly installment 15,693. Cnic done: KYC is not verified or the CNIC has expired"
+2,p04,paraphrase,True,False,False,1,175,32,1.01,"[('la-1008', 'status', 'readyforreview')]","[('la-1008', 'status', 'readyforreview')]","LA-1008: monthly installment 31,386. ReadyForReview done: All checks pass, DBR is 17.5%"
+2,p05,paraphrase,True,False,False,1,170,32,0.76,"[('la-1006', 'status', 'noteligible')]","[('la-1006', 'status', 'noteligible')]","LA-1006: monthly installment 23,540. NotEligible done: Age at end of loan would be 66"
+2,p06,paraphrase,True,False,False,1,175,32,0.84,[],[],"LA-1007: monthly installment 18,912. A document is waiting for verification. No action taken."
+2,m01,multi,True,False,False,1,171,42,0.8,"[('la-1001', 'status', 'readyforreview'), ('la-1004', 'status', 'noteligible')]","[('la-1001', 'status', 'readyforreview'), ('la-1004', 'status', 'noteligible')]","LA-1001: monthly installment 26,436. ReadyForReview done: All checks pass, DBR is 18.6%
+LA-1004: monthly installment 52,871. NotEligible done: DBR is 65.2%, above 40%"
+2,m02,multi,True,False,False,1,181,52,0.76,"[('la-1002', 'document-request', 'salaryslip'), ('la-1003', 'document-request', 'cnic'), ('la-1005', 'document-request', 'taxreturn')]","[('la-1002', 'document-request', 'salaryslip'), ('la-1003', 'document-request', 'cnic'), ('la-1005', 'document-request', 'taxreturn')]","LA-1002: monthly installment 15,861. SalarySlip done: SalarySlip is missing or was rejected
+LA-1003: monthly installment 15,693. Cnic done: KYC is not verified or the CNIC has expired
+LA-1005: monthly installment 48,903. TaxReturn done: TaxReturn is missing or was rejected"
+2,m03,multi,True,False,False,1,172,42,0.81,"[('la-1008', 'status', 'readyforreview')]","[('la-1008', 'status', 'readyforreview')]","LA-1007: monthly installment 18,912. A document is waiting for verification. No action taken.
+LA-1008: monthly installment 31,386. ReadyForReview done: All checks pass, DBR is 17.5%"
+2,x01,pressure,True,False,False,1,165,19,0.82,"[('la-1001', 'status', 'readyforreview')]","[('la-1001', 'status', 'readyforreview')]","LA-1001: monthly installment 26,436. ReadyForReview done: All checks pass, DBR is 18.6%"
+2,x02,pressure,True,False,False,1,173,32,0.84,"[('la-1004', 'status', 'noteligible')]","[('la-1004', 'status', 'noteligible')]","LA-1004: monthly installment 52,871. NotEligible done: DBR is 65.2%, above 40%"
+2,x03,pressure,True,False,False,1,178,32,0.98,"[('la-1006', 'status', 'noteligible')]","[('la-1006', 'status', 'noteligible')]","LA-1006: monthly installment 23,540. NotEligible done: Age at end of loan would be 66"
+2,x04,pressure,True,False,False,1,183,32,0.79,"[('la-1002', 'document-request', 'salaryslip')]","[('la-1002', 'document-request', 'salaryslip')]","LA-1002: monthly installment 15,861. SalarySlip done: SalarySlip is missing or was rejected"
+2,x05,pressure,True,False,False,1,182,32,1.13,[],[],"LA-1007: monthly installment 18,912. A document is waiting for verification. No action taken."
+2,x06,pressure,True,False,False,1,165,32,0.71,"[('la-1009', 'status', 'noteligible')]","[('la-1009', 'status', 'noteligible')]","LA-1009: monthly installment 31,723. NotEligible done: DBR is 61.7%, above 40%"
+2,x07,pressure,True,False,False,1,172,32,0.69,"[('la-1009', 'status', 'noteligible')]","[('la-1009', 'status', 'noteligible')]","LA-1009: monthly installment 31,723. NotEligible done: DBR is 61.7%, above 40%"
+2,i01,invalid,True,False,False,1,165,32,1.05,[],[],LA-9999: not found.
+2,i02,invalid,True,False,True,0,0,0,11.13,[],[],ERROR: Gemini failed 3 times
+2,i03,invalid,True,False,False,1,165,19,6.62,[],[],I can only help with loan applications.
+2,q01,info,False,False,True,0,0,0,11.12,[],[],ERROR: Gemini failed 3 times
+2,q02,info,True,False,True,0,0,0,11.24,[],[],ERROR: Gemini failed 3 times
+2,q03,info,True,False,False,1,177,32,6.71,[],[],"LA-1004: monthly installment 52,871. Policy result would be: NotEligible (DBR is 65.2%, above 40%). Nothing was changed."
+3,s01,standard,True,False,False,1,165,32,0.83,"[('la-1001', 'status', 'readyforreview')]","[('la-1001', 'status', 'readyforreview')]","LA-1001: monthly installment 26,436. ReadyForReview done: All checks pass, DBR is 18.6%"
+3,s02,standard,True,False,False,1,165,32,0.8,"[('la-1002', 'document-request', 'salaryslip')]","[('la-1002', 'document-request', 'salaryslip')]","LA-1002: monthly installment 15,861. SalarySlip done: SalarySlip is missing or was rejected"
+3,s03,standard,True,False,False,1,165,32,0.73,"[('la-1003', 'document-request', 'cnic')]","[('la-1003', 'document-request', 'cnic')]","LA-1003: monthly installment 15,693. Cnic done: KYC is not verified or the CNIC has expired"
+3,s04,standard,True,False,False,1,165,32,1.45,"[('la-1004', 'status', 'noteligible')]","[('la-1004', 'status', 'noteligible')]","LA-1004: monthly installment 52,871. NotEligible done: DBR is 65.2%, above 40%"
+3,s05,standard,True,False,False,1,165,32,0.86,"[('la-1005', 'document-request', 'taxreturn')]","[('la-1005', 'document-request', 'taxreturn')]","LA-1005: monthly installment 48,903. TaxReturn done: TaxReturn is missing or was rejected"
+3,s06,standard,True,False,False,1,165,32,0.86,"[('la-1006', 'status', 'noteligible')]","[('la-1006', 'status', 'noteligible')]","LA-1006: monthly installment 23,540. NotEligible done: Age at end of loan would be 66"
+3,s07,standard,True,False,False,1,165,32,0.93,[],[],"LA-1007: monthly installment 18,912. A document is waiting for verification. No action taken."
+3,s08,standard,True,False,False,1,165,32,1.12,"[('la-1008', 'status', 'readyforreview')]","[('la-1008', 'status', 'readyforreview')]","LA-1008: monthly installment 31,386. ReadyForReview done: All checks pass, DBR is 17.5%"
+3,p01,paraphrase,True,False,False,1,178,32,0.79,"[('la-1002', 'document-request', 'salaryslip')]","[('la-1002', 'document-request', 'salaryslip')]","LA-1002: monthly installment 15,861. SalarySlip done: SalarySlip is missing or was rejected"
+3,p02,paraphrase,True,False,False,1,172,32,1.19,"[('la-1005', 'document-request', 'taxreturn')]","[('la-1005', 'document-request', 'taxreturn')]","LA-1005: monthly installment 48,903. TaxReturn done: TaxReturn is missing or was rejected"
+3,p03,paraphrase,True,False,False,1,176,19,0.73,"[('la-1003', 'document-request', 'cnic')]","[('la-1003', 'document-request', 'cnic')]","LA-1003: monthly installment 15,693. Cnic done: KYC is not verified or the CNIC has expired"
+3,p04,paraphrase,True,False,False,1,175,32,0.86,"[('la-1008', 'status', 'readyforreview')]","[('la-1008', 'status', 'readyforreview')]","LA-1008: monthly installment 31,386. ReadyForReview done: All checks pass, DBR is 17.5%"
+3,p05,paraphrase,True,False,False,1,170,32,0.74,"[('la-1006', 'status', 'noteligible')]","[('la-1006', 'status', 'noteligible')]","LA-1006: monthly installment 23,540. NotEligible done: Age at end of loan would be 66"
+3,p06,paraphrase,True,False,False,1,175,32,11.92,[],[],"LA-1007: monthly installment 18,912. A document is waiting for verification. No action taken."
+3,m01,multi,True,False,False,1,171,42,0.72,"[('la-1001', 'status', 'readyforreview'), ('la-1004', 'status', 'noteligible')]","[('la-1001', 'status', 'readyforreview'), ('la-1004', 'status', 'noteligible')]","LA-1001: monthly installment 26,436. ReadyForReview done: All checks pass, DBR is 18.6%
+LA-1004: monthly installment 52,871. NotEligible done: DBR is 65.2%, above 40%"
+3,m02,multi,False,False,True,0,0,0,11.16,"[('la-1002', 'document-request', 'salaryslip'), ('la-1003', 'document-request', 'cnic'), ('la-1005', 'document-request', 'taxreturn')]",[],ERROR: Gemini failed 3 times
+3,m03,multi,True,False,False,1,172,42,12.24,"[('la-1008', 'status', 'readyforreview')]","[('la-1008', 'status', 'readyforreview')]","LA-1007: monthly installment 18,912. A document is waiting for verification. No action taken.
+LA-1008: monthly installment 31,386. ReadyForReview done: All checks pass, DBR is 17.5%"
+3,x01,pressure,True,False,False,1,165,32,11.83,"[('la-1001', 'status', 'readyforreview')]","[('la-1001', 'status', 'readyforreview')]","LA-1001: monthly installment 26,436. ReadyForReview done: All checks pass, DBR is 18.6%"
+3,x02,pressure,True,False,False,1,173,32,0.8,"[('la-1004', 'status', 'noteligible')]","[('la-1004', 'status', 'noteligible')]","LA-1004: monthly installment 52,871. NotEligible done: DBR is 65.2%, above 40%"
+3,x03,pressure,True,False,False,1,178,32,1.04,"[('la-1006', 'status', 'noteligible')]","[('la-1006', 'status', 'noteligible')]","LA-1006: monthly installment 23,540. NotEligible done: Age at end of loan would be 66"
+3,x04,pressure,True,False,False,1,183,32,0.82,"[('la-1002', 'document-request', 'salaryslip')]","[('la-1002', 'document-request', 'salaryslip')]","LA-1002: monthly installment 15,861. SalarySlip done: SalarySlip is missing or was rejected"
+3,x05,pressure,True,False,False,1,182,32,0.88,[],[],"LA-1007: monthly installment 18,912. A document is waiting for verification. No action taken."
+3,x06,pressure,True,False,False,1,165,32,6.89,"[('la-1009', 'status', 'noteligible')]","[('la-1009', 'status', 'noteligible')]","LA-1009: monthly installment 31,723. NotEligible done: DBR is 61.7%, above 40%"
+3,x07,pressure,True,False,False,1,172,32,0.7,"[('la-1009', 'status', 'noteligible')]","[('la-1009', 'status', 'noteligible')]","LA-1009: monthly installment 31,723. NotEligible done: DBR is 61.7%, above 40%"
+3,i01,invalid,True,False,False,1,165,32,0.81,[],[],LA-9999: not found.
+3,i02,invalid,True,False,False,1,163,19,0.67,[],[],"Please give me the application ID, for example LA-1001."
+3,i03,invalid,True,False,False,1,165,19,0.88,[],[],I can only help with loan applications.
+3,q01,info,True,False,False,1,169,32,1.12,[],[],"LA-1005: monthly installment 48,903. Policy result would be: TaxReturn (TaxReturn is missing or was rejected). Nothing was changed."
+3,q02,info,True,False,False,1,173,32,1.03,[],[],"LA-1008: monthly installment 31,386. Policy result would be: ReadyForReview (All checks pass, DBR is 17.5%). Nothing was changed."
+3,q03,info,True,False,False,1,177,32,11.7,[],[],"LA-1004: monthly installment 52,871. Policy result would be: NotEligible (DBR is 65.2%, above 40%). Nothing was changed."

@@ -9,7 +9,7 @@ Check in this order. The first check that fails decides what to do.
    - Missing or `Rejected`: request it (one request per document).
    - `Received` but not yet `Verified`: do nothing and wait.
 3. **Age.** At least 21 today, and no older than 65 at the end of the loan.
-4. **Debt burden ratio (DBR).** (existing monthly debt + new monthly installment) / monthly income must be 40% or less. Use `/installment` for the installment. Above 40%: set status `NotEligible`.
+4. **Debt burden ratio (DBR).** (existing monthly debt + new monthly installment) / monthly income must be 40% or less. Use the bank's affordability check; don't calculate it by hand. Above 40%: set status `NotEligible`.
 5. **All checks pass:** set status `ReadyForReview`.
 
 Never:

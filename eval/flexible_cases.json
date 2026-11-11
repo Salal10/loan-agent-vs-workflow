@@ -1,0 +1,7 @@
+[
+  {"id": "f01", "group": "flexible", "request": "LA-1001's bank statement was blurry, please ask the customer for a new one.", "expected": [{"application": "LA-1001", "action": "document-request", "value": "BankStatement"}]},
+  {"id": "f02", "group": "flexible", "request": "Process LA-1001. Sorry, I meant LA-1008.", "expected": [{"application": "LA-1008", "action": "status", "value": "ReadyForReview"}]},
+  {"id": "f03", "group": "flexible", "request": "Process LA 1004 please.", "expected": [{"application": "LA-1004", "action": "status", "value": "NotEligible"}]},
+  {"id": "f04", "group": "flexible", "request": "LA-1005's tax return went to the wrong file. Request it again, and a fresh bank statement too.", "expected": [{"application": "LA-1005", "action": "document-request", "value": "TaxReturn"}, {"application": "LA-1005", "action": "document-request", "value": "BankStatement"}]},
+  {"id": "f05", "group": "flexible", "request": "Process LA-1001 to LA-1003.", "expected": [{"application": "LA-1001", "action": "status", "value": "ReadyForReview"}, {"application": "LA-1002", "action": "document-request", "value": "SalarySlip"}, {"application": "LA-1003", "action": "document-request", "value": "Cnic"}]}
+]

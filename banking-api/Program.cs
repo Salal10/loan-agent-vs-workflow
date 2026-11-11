@@ -17,6 +17,24 @@ app.MapGet("/applications/{id}", (string id, LoanStore store) =>
 app.MapGet("/installment", (decimal amount, int months) =>
     Results.Ok(new { amount, months, annualRate = LoanMath.AnnualRate, monthlyInstallment = LoanMath.MonthlyInstallment(amount, months) }));
 
+app.MapGet("/applications/{id}/affordability", (string id, LoanStore store) =>
+{
+    if (!store.Applications.TryGetValue(id, out var application))
+        return Results.Problem($"Application '{id}' not found.", statusCode: 404);
+    var customer = store.Customers[application.CustomerId];
+    var installment = LoanMath.MonthlyInstallment(application.Amount, application.TenureMonths);
+    var dbr = Eligibility.DebtBurdenRatio(customer, application);
+    return Results.Ok(new
+    {
+        monthlyIncome = customer.MonthlyIncome,
+        existingMonthlyDebt = customer.ExistingMonthlyDebt,
+        monthlyInstallment = installment,
+        debtBurdenRatio = dbr,
+        limit = LoanMath.DbrLimit,
+        withinLimit = dbr <= LoanMath.DbrLimit,
+    });
+});
+
 app.MapPost("/applications/{id}/document-requests", (string id, DocumentRequest request, LoanStore store) =>
 {
     var result = RequestDocument(id, request, store);
@@ -67,6 +85,12 @@ static IResult ChangeStatus(string id, StatusChange request, LoanStore store)
         return Results.Problem("Loans can only be approved by a loan officer.", statusCode: 403);
     if (!EnumText.TryParse<ApplicationStatus>(request.Status, out var status))
         return Results.Problem($"Unknown status '{request.Status}'. Use ReadyForReview or NotEligible.", statusCode: 400);
+    if (status == ApplicationStatus.ReadyForReview)
+    {
+        var problem = Eligibility.ReasonNotReady(application, store.Customers[application.CustomerId], store.Today);
+        if (problem is not null)
+            return Results.Problem($"Can't mark ReadyForReview: {problem}", statusCode: 409);
+    }
     try
     {
         application.SetStatus(status, request.Reason);

@@ -3,6 +3,7 @@ namespace LoanApi;
 public static class LoanMath
 {
     public const decimal AnnualRate = 0.24m;
+    public const decimal DbrLimit = 0.40m;
 
     // Standard EMI formula: P * r * (1 + r)^n / ((1 + r)^n - 1), r = monthly rate
     public static decimal MonthlyInstallment(decimal amount, int months)
